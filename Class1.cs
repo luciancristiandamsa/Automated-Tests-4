@@ -11,7 +11,7 @@ namespace ClassLibrary4
    
     public class Class1
     {
-        IWebDriver driver = new ChromeDriver();
+        IWebDriver driver = new ChromeDriver(); // First commit
         
         [Fact]
         public void LoginPage_ValidUsername_ValidPassword()
