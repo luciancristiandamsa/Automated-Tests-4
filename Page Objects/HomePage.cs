@@ -1,43 +1,41 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using PageObjectModelTry.Page_Objects;
 
-namespace PageObjectModelTry.Page_Objects
+namespace PageObjectModelTry
 {
-    public class HomePage
+    public class Home 
     {
-        IWebDriver driver;
-        By Login = By.CssSelector("a[href *= '/authentication/']");
-        By SignUp = By.CssSelector("a[href *= '/signup/']");
-        By SignUpNow = By.CssSelector("a[href *= '/signup/']");
-        By StartQuickPlay = By.CssSelector("a[href *= '/quickplay/']");
+        private readonly ChromeDriver driver;
 
-        public HomePage(IWebDriver driver)
+        public Home(ChromeDriver driver)
         {
             this.driver = driver;
         }
 
-        public void LoginFromHomePage()
+        public LoginPage ClickLoginPage()
         {
-            driver.FindElement(Login).Click();
+            IWebElement element = driver.FindElement(By.XPath("/html/body/nav/div/div[2]/ul/li[1]/a"));
+            element.Click();
+            return new LoginPage(driver);
         }
 
-        public void SignUpFromHomePage()
+        public LoginPage ClickOnStartQuickPlay()
         {
-            driver.FindElement(SignUp).Click();
+            IWebElement element = driver.FindElementByCssSelector("a[href*='quickplay']");
+            element.Click();
+
+            return new LoginPage(driver);
         }
 
-        public void SignUpNowFromHomePage()
+        public SignUpPage ClickOnSignUp()
         {
-            driver.FindElement(SignUpNow).Click();
-        }
+            IWebElement clickSignUp = driver.FindElementByCssSelector("a[href*='signup']");
+            clickSignUp.Click();
 
-        public void StartQuickPlayFromHomePage()
-        {
-            driver.FindElement(StartQuickPlay).Click();
+            return new SignUpPage(driver);
         }
     }
 }

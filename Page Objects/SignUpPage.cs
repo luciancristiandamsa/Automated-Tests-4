@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,62 +9,32 @@ using System.Threading.Tasks;
 
 namespace PageObjectModelTry.Page_Objects
 {
-    class SignUpPage
+    public class SignUpPage
     {
-        IWebDriver driver;
-        By Name = By.Name("inputName");
-        By Email = By.Name("inputEmail");
-        By Password = By.Name("inputPassword");
-        By SighUpButton = By.CssSelector("body > div.grayed > div > section > form.ng-pristine.ng-invalid.ng-invalid-required > div:nth-child(5) > div > button");
-        By LoginFromSignUpPageLink = By.CssSelector("a[href *= '/authentication/']");
+        private readonly ChromeDriver driver;
+        private readonly WebDriverWait wait;
 
-        public SignUpPage (IWebDriver driver)
+        public SignUpPage(ChromeDriver driver)
         {
             this.driver = driver;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        public void ValidTypeName()
+        [Obsolete]
+        public YourPokerRoomsPage_VotingProcess FillUpAllFields(string name, string email, string password)
         {
-            driver.FindElement(Name).SendKeys(LoginPage.validName);
+            driver.FindElementByName("inputName").SendKeys(name);
+            driver.FindElementByName("inputEmail").SendKeys(email);
+            driver.FindElementByName("inputPassword").SendKeys(password);
+            IWebElement clickSignUp = driver.FindElementByXPath("//*[@class='btn btn-default btn-lg btn-sign-up btn-block']");
+            clickSignUp.Click();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("profile-img")));
+            IWebElement clickOnProfileImage = driver.FindElementById("profile-img");
+            clickOnProfileImage.Click();
+            IWebElement clickOnSignOut = driver.FindElementByCssSelector("a[href*='/authentication/logout/']");
+            clickOnSignOut.Click();
+
+            return new YourPokerRoomsPage_VotingProcess(driver);
         }
-
-        public void InvalidTypeName()
-        {
-            driver.FindElement(Name).SendKeys(LoginPage.invalidNameAndEmail);
-        }
-
-        public void ValidTypeEmail()
-        {
-            driver.FindElement(Email).SendKeys(LoginPage.validEmail);
-        }
-
-        public void InvalidTypeEmail()
-        {
-            driver.FindElement(Email).SendKeys(LoginPage.invalidEmail);
-        }
-
-        public void ValidTypePassword()
-        {
-            driver.FindElement(Password).SendKeys(LoginPage.validPassword);
-        }
-
-        public void InvalidTypePassword()
-        {
-            driver.FindElement(Password).SendKeys(LoginPage.invalidPassword);
-        }
-
-        public void ClickSignUpButton()
-        {
-            driver.FindElement(SighUpButton).Click();
-        }
-
-        public void ClickLoginButtonFromSignUpPage()
-        {
-            driver.FindElement(LoginFromSignUpPageLink).Click();
-        }
-
-
     }
-
-   
 }

@@ -6,69 +6,38 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.PageObjects;
+using OpenQA.Selenium.Support.UI;
 
 namespace PageObjectModelTry.Page_Objects
 {
     public class LoginPage
     {
-        public IWebDriver driver;
-        By Email = By.Name("inputEmail");
-        By Password = By.Name("inputPassword");
-        By LoginButton = By.ClassName("btn-login");
-        By ForgottenPassword = By.CssSelector("a[href*='/authentication/restorepassword/']");
-        By LinkedInIconSignUp = By.CssSelector("body > div.grayed > div > section > form.ng-pristine.ng-valid > ul > li:nth-child(1) > button > img");
-        By SignUpFromLoginPageLink = By.CssSelector("a[href*='/signup/']");
-        public static string validName = "aaa098873";
-        public static string invalidNameAndEmail = "";
-        public static string validEmail = "aaa098873@gmail.com";
-        public static string invalidEmail = "qqqqqqqqqq";
-        public static string validPassword = "ababab.123";
-        public static string invalidPassword = "qqqqqqqqqq";
+        private readonly ChromeDriver driver;
+        private readonly WebDriverWait wait;
 
-
-        public LoginPage(IWebDriver driver)
+        public LoginPage(ChromeDriver driver)
         {
             this.driver = driver;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        public void ValidTypeUserEmail()
+        public YourPokerRoomsPage_VotingProcess LoginProcessTypeCredentials(string email, string password)
         {
-            driver.FindElement(Email).SendKeys(validEmail);
+            driver.FindElement(By.Name("inputEmail")).SendKeys(email);
+            driver.FindElement(By.Name("inputPassword")).SendKeys(password);
+            driver.FindElement(By.ClassName("btn-login")).Click();
+
+            return new YourPokerRoomsPage_VotingProcess(driver);
         }
 
-        public void InvalidTypeUserEmail()
+        [Obsolete]
+        public YourPokerRoomsPage_VotingProcess EnterTheName(string name)
         {
-            driver.FindElement(Email).SendKeys(invalidNameAndEmail);
-        }
+            driver.FindElementByName("inputName").SendKeys(name);
+            IWebElement element = driver.FindElementByXPath("//*[@class='btn btn-default btn-lg btn-enter btn-block']");
+            element.Click();
 
-        public void ValidTypePassword()
-        {
-            driver.FindElement(Password).SendKeys(validPassword);
-        }
-
-        public void InvalidTypePassword()
-        {
-            driver.FindElement(Password).SendKeys(invalidPassword);
-        }
-
-        public void ClickLoginButton()
-        {
-            driver.FindElement(LoginButton).Click();
-        }
-
-        public void ClickForgottenPassword()
-        {
-            driver.FindElement(ForgottenPassword).Click();
-        }
-
-        public void LoginWIthLinkedInAccount()
-        {
-            driver.FindElement(LinkedInIconSignUp).Click();
-        }
-
-        public void SignUpFromLoginPage()
-        {
-            driver.FindElement(SignUpFromLoginPageLink).Click();
+            return new YourPokerRoomsPage_VotingProcess(driver);
         }
     }
 
