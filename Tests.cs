@@ -11,7 +11,7 @@ namespace PageObjectModelTry
 {
     public class Tests 
     {
-        private readonly ChromeDriver driver;  // third 
+        private readonly ChromeDriver driver;  
         private readonly WebDriverWait wait; 
          
         public Tests()
