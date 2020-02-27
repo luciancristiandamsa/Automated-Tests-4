@@ -26,16 +26,19 @@ namespace PageObjectModelTry.Page_Objects
         {
             wait.Until(ExpectedConditions.ElementToBeClickable(By.Name("inputName")));
             driver.FindElementByName("inputName").SendKeys(storyName);
-            IWebElement ClickSaveAndClose = driver.FindElementByXPath("/html/body/div[1]/div/div[1]/div/div/div[1]/div/div/div/form/div[2]/div[4]/div[2]/button");
+            IWebElement ClickSaveAndClose = driver.FindElementByXPath("//*[@ng-bs-click='createAndClose']");
             ClickSaveAndClose.Click();
             wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("btn-start")));
-            driver.FindElementById("btn-start").Click();
+            IWebElement clickStart = driver.FindElementById("btn-start");
+            clickStart.Click();
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[1]/div/div[1]/div/div/section/div/div[2]/div[2]/div[2]/div[1]/section[2]/div/div[2]/div/div[3]/button")));
-            driver.FindElementByXPath("/html/body/div[1]/div/div[1]/div/div/section/div/div[2]/div[2]/div[1]/div/section/div[2]/ul/li[4]/button/div[2]").Click();
+            IWebElement clickOnTheCard = driver.FindElementByXPath("/html/body/div[1]/div/div[1]/div/div/section/div/div[2]/div[2]/div[1]/div/section/div[2]/ul/li[4]/button/div[2]");
+            clickOnTheCard.Click();
             wait.Until(ExpectedConditions.ElementExists(By.Id("finalEstimate")));
             SelectElement element = new SelectElement(driver.FindElementById("finalEstimate"));
             element.SelectByValue("7");
-            driver.FindElementByClassName("btn-one").Click();
+            IWebElement clickOnFinish = driver.FindElementByXPath("//*[@ng-bs-click='finish']");
+            clickOnFinish.Click();
 
             return new CreateStoriesAndVotingProcess(driver);
         }
@@ -45,15 +48,17 @@ namespace PageObjectModelTry.Page_Objects
         {
             wait.Until(ExpectedConditions.ElementToBeClickable(By.Name("inputName")));
             driver.FindElementByName("inputName").SendKeys(storyName);
-            IWebElement ClickSaveAndClose = driver.FindElementByXPath("/html/body/div[1]/div/div[1]/div/div/div[1]/div/div/div/form/div[2]/div[4]/div[2]/button");
+            IWebElement ClickSaveAndClose = driver.FindElementByXPath("//*[@ng-bs-click='createAndClose']");
             ClickSaveAndClose.Click();
-            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[5]/div[3]/button[3]")));
-            IWebElement clickEndTour = driver.FindElementByXPath("/html/body/div[5]/div[3]/button[3]");
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@data-role='end']")));
+            IWebElement clickEndTour = driver.FindElementByXPath("//*[@data-role='end']");
             clickEndTour.Click();
             wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("btn-start")));
-            driver.FindElementById("btn-start").Click();
+            IWebElement clickStart = driver.FindElementById("btn-start");
+            clickStart.Click();
             wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[1]/div/div[1]/div/div/section/div/div[2]/div[2]/div[2]/div[1]/section[2]/div/div[2]/div/div[3]/button")));
-            driver.FindElementByXPath("/html/body/div[1]/div/div[1]/div/div/section/div/div[2]/div[2]/div[1]/div/section/div[2]/ul/li[4]/button/div[2]").Click();
+            IWebElement clickOnTheCard = driver.FindElementByXPath("/html/body/div[1]/div/div[1]/div/div/section/div/div[2]/div[2]/div[1]/div/section/div[2]/ul/li[4]/button/div[2]");
+            clickOnTheCard.Click();
             wait.Until(ExpectedConditions.ElementExists(By.Id("finalEstimate")));
             SelectElement element = new SelectElement(driver.FindElementById("finalEstimate"));
             element.SelectByValue("7");

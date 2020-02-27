@@ -51,6 +51,19 @@ namespace PageObjectModelTry.Page_Objects
 
             return new LoginPage(driver);
         }
+
+        [Obsolete]
+        public LoginPage ClickOnForgottenPassword(string email)
+        {
+            IWebElement clickFogottenPassword = driver.FindElementByCssSelector("a[href='/authentication/restorepassword/']");
+            clickFogottenPassword.Click();
+            driver.FindElementByName("inputEmail").SendKeys(email);
+            IWebElement clickRestore = driver.FindElementByXPath("//*[@class='btn btn-default btn-lg btn-restore btn-block']");
+            clickRestore.Click();
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='ng-binding']")));
+
+            return new LoginPage(driver);
+        }
     }
 
 }

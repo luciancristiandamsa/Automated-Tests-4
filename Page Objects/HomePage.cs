@@ -17,7 +17,7 @@ namespace PageObjectModelTry
 
         public LoginPage ClickLogin()
         {
-            IWebElement element = driver.FindElement(By.XPath("/html/body/nav/div/div[2]/ul/li[1]/a"));
+            IWebElement element = driver.FindElement(By.XPath("//*[@class='btn btn-primary hidden-xs']"));
             element.Click();
             return new LoginPage(driver);
         }
