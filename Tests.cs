@@ -26,8 +26,8 @@ namespace PageObjectModelTry
         [Obsolete]
         public void LoginWithValidCredentials()
         {
-            var home = new Home(driver);
-            var login = home.ClickLoginPage();
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
             var rooms = login.LoginProcessTypeCredentials("aaa098873@gmail.com", "ababab.123");
             var createNewRoom = rooms.SetUpAndCreateNewRoom("First Room");
             var createNewStory = createNewRoom.VotingProcess("First Story");
@@ -41,7 +41,7 @@ namespace PageObjectModelTry
         [Obsolete]
         public void StartQuickPlay()
         {
-            var home = new Home(driver);
+            var home = new HomePage(driver);
             var login = home.ClickOnStartQuickPlay();
             var room = login.EnterTheName("Test");
             var createNewRoom = room.SetUpAndCreateNewRoom("First Room QuickPlay");
@@ -56,7 +56,7 @@ namespace PageObjectModelTry
         [Obsolete]
         public void SignUpWithValidCredentials()
         {
-            var home = new Home(driver);
+            var home = new HomePage(driver);
             var signup = home.ClickOnSignUp();
             var room = signup.FillUpAllFields("aaa098873", "aaa098873@gmail.com", "ababab.123");
             bool element = driver.FindElement(By.LinkText("Login")).Displayed;
@@ -64,5 +64,22 @@ namespace PageObjectModelTry
             Assert.True(element);
             driver.Quit();
         }
+
+        [Fact]
+        public void SignUpUsingLinkedInAccount()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
+            var linkedIn = login.ClickOnTheLinkedInIcon("test", "test");
+            bool result = driver.FindElementByXPath("//*[@id='error-for-username']").Displayed;
+            Assert.True(result);
+            driver.Quit();
+        
+            
+        }
+
+
+
+
     }
 }

@@ -39,6 +39,18 @@ namespace PageObjectModelTry.Page_Objects
 
             return new YourPokerRoomsPage_VotingProcess(driver);
         }
+
+        public LoginPage ClickOnTheLinkedInIcon(string email, string password)
+        {
+            IWebElement clickOnIcon = driver.FindElementByXPath("//*[@title='LinkedIn']");
+            clickOnIcon.Click();
+            driver.FindElementById("username").SendKeys(email);
+            driver.FindElementById("password").SendKeys(password);
+            IWebElement clickOnLogin = driver.FindElementByXPath("//*[@class='btn__primary--large from__button--floating']");
+            clickOnLogin.Click();
+
+            return new LoginPage(driver);
+        }
     }
 
 }

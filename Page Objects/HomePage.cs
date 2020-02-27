@@ -6,16 +6,16 @@ using PageObjectModelTry.Page_Objects;
 
 namespace PageObjectModelTry
 {
-    public class Home 
+    public class HomePage 
     {
         private readonly ChromeDriver driver;
 
-        public Home(ChromeDriver driver)
+        public HomePage(ChromeDriver driver)
         {
             this.driver = driver;
         }
 
-        public LoginPage ClickLoginPage()
+        public LoginPage ClickLogin()
         {
             IWebElement element = driver.FindElement(By.XPath("/html/body/nav/div/div[2]/ul/li[1]/a"));
             element.Click();
@@ -37,5 +37,7 @@ namespace PageObjectModelTry
 
             return new SignUpPage(driver);
         }
+
+        
     }
 }
