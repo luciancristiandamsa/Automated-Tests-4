@@ -20,13 +20,12 @@ namespace PageObjectModelTry.Page_Objects
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        [Obsolete]
         public YourPokerRoomsPage_VotingProcess FillUpAllFields(string name, string email, string password)
         {
             driver.FindElementByName("inputName").SendKeys(name);
             driver.FindElementByName("inputEmail").SendKeys(email);
             driver.FindElementByName("inputPassword").SendKeys(password);
-            IWebElement clickSignUp = driver.FindElementByXPath("//*[@class='btn btn-default btn-lg btn-sign-up btn-block']");
+            IWebElement clickSignUp = driver.FindElementByXPath("//*[text()='Sign up']");
             clickSignUp.Click();
             wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("profile-img")));
             IWebElement clickOnProfileImage = driver.FindElementById("profile-img");

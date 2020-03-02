@@ -23,13 +23,12 @@ namespace PageObjectModelTry
         }
 
         [Fact]
-        [Obsolete]
-        public void LoginAndPlay()
+        public void LoginAndPlayOnScrumMode()
         {
             var home = new HomePage(driver);
             var login = home.ClickLogin();
-            var rooms = login.LoginProcessTypeCredentials("aaa098873@gmail.com", "ababab.123");
-            var createNewRoom = rooms.SetUpAndCreateNewRoom("First Room");
+            var room = login.LoginProcessTypeCredentials("aaa098873@gmail.com", "ababab.123");
+            var createNewRoom = room.SetUpAndCreateNewRoom("First Room");
             var createNewStory = createNewRoom.VotingProcess("First Story");
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='toast-message']")));
             bool assertionResult = driver.FindElementByXPath("//*[@class='toast-message']").Displayed;
@@ -39,7 +38,6 @@ namespace PageObjectModelTry
         }
 
         [Fact]
-        [Obsolete]
         public void StartQuickPlay()
         {
             var home = new HomePage(driver);
@@ -55,7 +53,6 @@ namespace PageObjectModelTry
         }
 
         [Fact]
-        [Obsolete]
         public void SignUpWithValidCredentials()
         {
             var home = new HomePage(driver);
@@ -92,6 +89,22 @@ namespace PageObjectModelTry
             driver.Quit();
         }
 
+
+        [Fact]
+        [Obsolete]
+        public void LoginAndPlayOnPlayingCardsMode()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
+            var room = login.LoginProcessTypeCredentials("aaa098873@gmail.com", "ababab.123");
+            var createNewRoom = room.SetUpAndCreateNewRoomWithDifferentModes("First Room");
+            var createNewStory = createNewRoom.VotingProcess("First Story");
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='toast-message']")));
+            bool assertionResult = driver.FindElementByXPath("//*[@class='toast-message']").Displayed;
+
+            Assert.True(assertionResult);
+            driver.Quit();
+        }
 
     }
 }

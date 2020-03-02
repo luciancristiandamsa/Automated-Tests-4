@@ -30,11 +30,10 @@ namespace PageObjectModelTry.Page_Objects
             return new YourPokerRoomsPage_VotingProcess(driver);
         }
 
-        [Obsolete]
         public YourPokerRoomsPage_VotingProcess EnterTheName(string name)
         {
             driver.FindElementByName("inputName").SendKeys(name);
-            IWebElement element = driver.FindElementByXPath("//*[@class='btn btn-default btn-lg btn-enter btn-block']");
+            IWebElement element = driver.FindElementByXPath("//button[text()='Enter']");
             element.Click();
 
             return new YourPokerRoomsPage_VotingProcess(driver);
@@ -46,21 +45,20 @@ namespace PageObjectModelTry.Page_Objects
             clickOnIcon.Click();
             driver.FindElementById("username").SendKeys(email);
             driver.FindElementById("password").SendKeys(password);
-            IWebElement clickOnLogin = driver.FindElementByXPath("//*[@class='btn__primary--large from__button--floating']");
+            IWebElement clickOnLogin = driver.FindElementByXPath("//button[text()='Sign in']");
             clickOnLogin.Click();
 
             return new LoginPage(driver);
         }
 
-        [Obsolete]
         public LoginPage ClickOnForgottenPassword(string email)
         {
             IWebElement clickFogottenPassword = driver.FindElementByCssSelector("a[href='/authentication/restorepassword/']");
             clickFogottenPassword.Click();
             driver.FindElementByName("inputEmail").SendKeys(email);
-            IWebElement clickRestore = driver.FindElementByXPath("//*[@class='btn btn-default btn-lg btn-restore btn-block']");
+            IWebElement clickRestore = driver.FindElementByXPath("//button[text()='Restore password']");
             clickRestore.Click();
-            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='ng-binding']")));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[contains(text(), 'Password has been')]")));
 
             return new LoginPage(driver);
         }
