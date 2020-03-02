@@ -77,7 +77,6 @@ namespace PageObjectModelTry
         }
 
         [Fact]
-        [Obsolete]
         public void RestorePassword()
         {
             var home = new HomePage(driver);
@@ -91,7 +90,6 @@ namespace PageObjectModelTry
 
 
         [Fact]
-        [Obsolete]
         public void LoginAndPlayOnPlayingCardsMode()
         {
             var home = new HomePage(driver);
