@@ -104,5 +104,33 @@ namespace PageObjectModelTry
             driver.Quit();
         }
 
+        [Fact]
+        public void StartQuickPlayWithFourCardsInFibonacciMode()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickOnStartQuickPlay();
+            var room = login.EnterTheName("Test");
+            var createNewRoom = room.SetUpAndCreateNewRoomWithFourCards("First Room");
+            var createNewStory = createNewRoom.VotingProcessQuickPlay("First Story");
+            bool assertionResult = driver.FindElementByXPath("//*[@class='toast-message']").Displayed;
+
+            Assert.True(assertionResult);
+            driver.Quit();
+        }
+
+        [Fact]
+        public void StartQuickPlayAndPutPlayerOnObserverMode()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickOnStartQuickPlay();
+            var room = login.EnterTheName("Test");
+            var createNewRoom = room.SetUpAndCreateNewRoom("First Room QuickPlay");
+            var createNewStory = createNewRoom.VotingProcessQuickPlayOnObserverMode("First QuickPlay Story");
+            bool assertionResult = driver.FindElementByXPath("//*[@class='toast-message']").Displayed;
+
+            Assert.True(assertionResult);
+            driver.Quit();
+        }
+
     }
 }

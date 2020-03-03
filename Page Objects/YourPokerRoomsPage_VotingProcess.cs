@@ -22,7 +22,7 @@ namespace PageObjectModelTry.Page_Objects
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-
+        
         public CreateStoriesAndVotingProcess SetUpAndCreateNewRoom(string roomName)
         {
             Thread.Sleep(5000);
@@ -59,8 +59,33 @@ namespace PageObjectModelTry.Page_Objects
             clickOnCoundownTimer.Click();
             SelectElement selectCountdownTime = new SelectElement(driver.FindElementByXPath("//*[@ng-model='countdownTimerValue']"));
             selectCountdownTime.SelectByValue("4");
-            IWebElement element = driver.FindElementByClassName("btn-ok");
-            element.Click();
+            IWebElement clickOnCreate = driver.FindElementByClassName("btn-ok");
+            clickOnCreate.Click();
+
+            return new CreateStoriesAndVotingProcess(driver);
+        }
+
+        public CreateStoriesAndVotingProcess SetUpAndCreateNewRoomWithFourCards(string roomName)
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("createRoomNameInput")));
+            driver.FindElementById("createRoomNameInput").SendKeys(roomName);
+            SelectElement selectCardsMode = new SelectElement(driver.FindElementByXPath("//select[contains(@class, 'card-set-type')]"));
+            selectCardsMode.SelectByValue("2");
+            IWebElement clickOnCustomizeCards = driver.FindElementByXPath("//*[contains(text(), 'Customize cards values')]");
+            clickOnCustomizeCards.Click();
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector("#cardValues > div > div:nth-child(3) > div")));
+            IWebElement clickOnOne = driver.FindElementByCssSelector("#cardValues > div > div:nth-child(3) > div > div:nth-child(2) > label > span.custom-checkbox > input");
+            clickOnOne.Click();
+            IWebElement clickOnTwo = driver.FindElementByCssSelector("#cardValues > div > div:nth-child(3) > div > div:nth-child(3) > label > span.custom-checkbox > input");
+            clickOnTwo.Click();
+            IWebElement clickOnThree = driver.FindElementByCssSelector("#cardValues > div > div:nth-child(3) > div > div:nth-child(4) > label > span.custom-checkbox > input");
+            clickOnThree.Click();
+            IWebElement clickOnCofee = driver.FindElementByCssSelector("#cardValues > div > div:nth-child(3) > div > div:nth-child(13) > label > span.custom-checkbox > input");
+            clickOnCofee.Click();
+            IWebElement clickOnAllowPlayerToVoteAfterScoresDown = driver.FindElementByXPath("//input[contains(@ng-model, 'createForm.changeVote')]");
+            clickOnAllowPlayerToVoteAfterScoresDown.Click();
+            IWebElement clickOnCreate = driver.FindElementByClassName("btn-ok");
+            clickOnCreate.Click();
 
             return new CreateStoriesAndVotingProcess(driver);
         }

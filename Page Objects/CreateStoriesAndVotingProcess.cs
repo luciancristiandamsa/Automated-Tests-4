@@ -59,8 +59,33 @@ namespace PageObjectModelTry.Page_Objects
             clickOnTheCard.Click();
             wait.Until(ExpectedConditions.ElementExists(By.Id("finalEstimate")));
             SelectElement element = new SelectElement(driver.FindElementById("finalEstimate"));
-            element.SelectByValue("7");
+            element.SelectByValue("3");
             driver.FindElementByClassName("btn-one").Click();
+
+            return new CreateStoriesAndVotingProcess(driver);
+        }
+
+        public CreateStoriesAndVotingProcess VotingProcessQuickPlayOnObserverMode(string storyName)
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Name("inputName")));
+            driver.FindElementByName("inputName").SendKeys(storyName);
+            IWebElement ClickSaveAndClose = driver.FindElementByXPath("//*[@ng-bs-click='createAndClose']");
+            ClickSaveAndClose.Click();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@data-role='end']")));
+            IWebElement clickEndTour = driver.FindElementByXPath("//*[@data-role='end']");
+            clickEndTour.Click();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@class='img-border dropdown-toggle']")));
+            IWebElement clickOnProfileImage = driver.FindElementByXPath("//*[@class='img-border dropdown-toggle']");
+            clickOnProfileImage.Click();
+            IWebElement clickOnObserver = driver.FindElementByXPath("//*[text()='Observer ']");
+            clickOnObserver.Click();
+            IWebElement clickStart = driver.FindElementById("btn-start");
+            clickStart.Click();
+            wait.Until(ExpectedConditions.ElementExists(By.Id("finalEstimate")));
+            SelectElement element = new SelectElement(driver.FindElementById("finalEstimate"));
+            element.SelectByValue("3");
+            driver.FindElementByClassName("btn-one").Click();
+
 
             return new CreateStoriesAndVotingProcess(driver);
         }
