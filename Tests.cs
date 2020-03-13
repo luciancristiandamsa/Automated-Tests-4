@@ -1,10 +1,7 @@
-﻿using java.sql;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using PageObjectModelTry.Page_Objects;
 using System;
-using System.Threading;
 using Xunit;
 
 namespace PageObjectModelTry
@@ -131,6 +128,20 @@ namespace PageObjectModelTry
             Assert.True(assertionResult);
             driver.Quit();
         }
+        [Fact]
+        public void PlayingWithTwoPlayers()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
+            var room = login.LoginProcessTypeCredentials("aaa098873@gmail.com", "ababab.123");
+            var createNewRoom = room.SetUpAndCreateNewRoom("First Room");
+            var createNewStory = createNewRoom.VotingProcessWithTwoPlayers("First Story", "Player");
+            bool assertionResult = driver.FindElementByXPath("//*[@class='toast-message']").Displayed;
 
+            Assert.True(assertionResult);
+            driver.Quit();
+
+        }
+            
     }
 }
