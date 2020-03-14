@@ -85,5 +85,32 @@ namespace PageObjectModelTry.Page_Objects
 
             return new CreateStoriesAndVotingProcess(driver);
         }
+
+        public CreateStoriesAndVotingProcess SetUpAndCreateNewRoomWithCountdown(string roomName)
+        {
+            Thread.Sleep(5000);
+            bool quickPlayOrNotQuickPlay = driver.FindElementById("createRoomNameInput").Displayed;
+            if (quickPlayOrNotQuickPlay)
+            {
+                driver.FindElementById("createRoomNameInput").SendKeys(roomName);
+                IWebElement clickOnCoundownTimer = driver.FindElementByXPath("//*[text()=' Do you want to use a countdown timer?']");
+                clickOnCoundownTimer.Click();
+                SelectElement selectCountdownTime = new SelectElement(driver.FindElementByXPath("//*[@ng-model='countdownTimerValue']"));
+                selectCountdownTime.SelectByValue("4");
+                IWebElement clickOnCreate = driver.FindElementByClassName("btn-ok");
+                clickOnCreate.Click();
+            }
+            else
+            {
+                IWebElement ClickCreateRoom = driver.FindElementByXPath("//*[text()='Create Room']");
+                ClickCreateRoom.Click();
+                wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("createRoomNameInput")));
+                driver.FindElementById("createRoomNameInput").SendKeys(roomName);
+                IWebElement element = driver.FindElementByClassName("btn-ok");
+                element.Click();
+            }
+
+            return new CreateStoriesAndVotingProcess(driver);
+        }
     }
 }

@@ -2,15 +2,16 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Threading;
 using Xunit;
 
 namespace PageObjectModelTry
 {
-    public class Tests 
+    public class Tests
     {
-        private readonly ChromeDriver driver;  
-        private readonly WebDriverWait wait; 
-         
+        private readonly ChromeDriver driver;
+        private readonly WebDriverWait wait;
+
         public Tests()
         {
             driver = new ChromeDriver();
@@ -30,7 +31,7 @@ namespace PageObjectModelTry
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='toast-message']")));
             bool assertionResult = driver.FindElementByXPath("//*[@class='toast-message']").Displayed;
 
-            Assert.True(assertionResult); 
+            Assert.True(assertionResult);
             driver.Quit();
         }
 
@@ -84,7 +85,6 @@ namespace PageObjectModelTry
             Assert.True(assertionResult);
             driver.Quit();
         }
-
 
         [Fact]
         public void LoginAndPlayOnPlayingCardsMode()
@@ -140,8 +140,33 @@ namespace PageObjectModelTry
 
             Assert.True(assertionResult);
             driver.Quit();
+        }
+
+        [Fact]
+        public void DoNotRememberMyAccountAfterCloseTheWindow()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
+            var room = login.LoginProcessTypeCredentials("aaa098873@gmail.com", "ababab.123");
+            wait.Until(ExpectedConditions.ElementExists(By.XPath("//div[text()='Recent Rooms']")));
+            driver.Close();
+            IWebDriver driver1 = new ChromeDriver();
+            driver1.Navigate().GoToUrl("https://www.planitpoker.com");
+            bool elementVisible = driver1.FindElement(By.XPath("//a[text()='Login']")).Displayed;
+            driver1.Close();
+
+            Assert.True(elementVisible);
+        }
+
+        [Fact]
+        public void StartQuickPlayWithAnotherPlayerAndCountdownTimer()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickOnStartQuickPlay();
+            var room = login.EnterTheName("First Player");
+            var createNewRoom = room.SetUpAndCreateNewRoomWithCountdown("First Room");
+            var createNewStory = createNewRoom.VotingProcessQuickPlayWithAnotherPlayer("First Story", "Second Player");
 
         }
-            
     }
 }
