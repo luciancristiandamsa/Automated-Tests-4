@@ -194,7 +194,6 @@ namespace PageObjectModelTry.Page_Objects
             IWebElement clickOnFinish = driver.FindElementByXPath("//*[@ng-bs-click='finish']");
             clickOnFinish.Click();
             driver1.Quit();
-            driver.Quit();
 
             return new CreateStoriesAndVotingProcess(driver);
         }

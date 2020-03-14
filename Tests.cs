@@ -167,6 +167,8 @@ namespace PageObjectModelTry
             var createNewRoom = room.SetUpAndCreateNewRoomWithCountdown("First Room");
             var createNewStory = createNewRoom.VotingProcessQuickPlayWithAnotherPlayer("First Story", "Second Player");
 
+            Assert.NotEqual("PlanITpoker: Your Poker Rooms", driver.Title);
+            driver.Quit();
         }
     }
 }
