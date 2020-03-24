@@ -1,16 +1,26 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using PageObjectModelTry.Page_Objects;
+using System;
 
 namespace PageObjectModelTry
 {
     public class HomePage 
     {
         private readonly ChromeDriver driver;
+        private readonly WebDriverWait wait;
 
         public HomePage(ChromeDriver driver)
         {
             this.driver = driver;
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        }
+
+        public string Title()
+        {
+            string title = this.driver.Title;
+            return title;
         }
 
         public LoginPage ClickLogin()

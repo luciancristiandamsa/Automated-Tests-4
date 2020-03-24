@@ -16,7 +16,7 @@ namespace PageObjectModelTry.Page_Objects
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        public YourPokerRoomsPage_VotingProcess LoginProcessTypeCredentials(string email, string password)
+        public YourPokerRoomsPage_VotingProcess LoginProcessWithValidCredentials(string email, string password)
         {
             driver.FindElement(By.Name("inputEmail")).SendKeys(email);
             driver.FindElement(By.Name("inputPassword")).SendKeys(password);
@@ -58,6 +58,5 @@ namespace PageObjectModelTry.Page_Objects
             return new LoginPage(driver);
         }
     }
-
 }
 

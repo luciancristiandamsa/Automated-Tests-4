@@ -18,7 +18,6 @@ namespace PageObjectModelTry.Page_Objects
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
-        
         public CreateStoriesAndVotingProcess SetUpAndCreateNewRoom(string roomName)
         {
             Thread.Sleep(5000);
@@ -111,6 +110,17 @@ namespace PageObjectModelTry.Page_Objects
             }
 
             return new CreateStoriesAndVotingProcess(driver);
+        }
+
+        public MyProfilePage EnterInMyProfile()
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@id='profile-img']")));
+            IWebElement clickOnTheProfileImage = driver.FindElementByXPath("//*[@id='profile-img']");
+            clickOnTheProfileImage.Click();
+            IWebElement clickOnMyProfile = driver.FindElementByXPath("//*[@href='/board//#/profile']");
+            clickOnMyProfile.Click();
+         
+            return new MyProfilePage(driver);
         }
     }
 }
