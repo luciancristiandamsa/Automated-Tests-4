@@ -37,7 +37,7 @@ namespace PageObjectModelTry.Page_Objects
                 IWebElement element = driver.FindElementByClassName("btn-ok");
                 element.Click();
             }
-            
+
             return new CreateStoriesAndVotingProcess(driver);
         }
 
@@ -119,8 +119,44 @@ namespace PageObjectModelTry.Page_Objects
             clickOnTheProfileImage.Click();
             IWebElement clickOnMyProfile = driver.FindElementByXPath("//*[@href='/board//#/profile']");
             clickOnMyProfile.Click();
-         
+
             return new MyProfilePage(driver);
+        }
+
+        public YourPokerRoomsPage_VotingProcess DeleteFirstRoom()
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@class='table table-hover table-rooms']//child::tr[1]//child::td[8]")));
+            IWebElement clickOnDeleteIcon = driver.FindElementByXPath("//*[@class='table table-hover table-rooms']//child::tr[1]//child::td[8]");
+            clickOnDeleteIcon.Click();
+            wait.Until(ExpectedConditions.AlertIsPresent());
+            IAlert alertOK = driver.SwitchTo().Alert();
+            alertOK.Accept();
+            Thread.Sleep(3000);
+
+            return new YourPokerRoomsPage_VotingProcess(driver);
+        }
+
+        public YourPokerRoomsPage_VotingProcess EditFirstRoomFromPage(string updatedRoomName)
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@class='table table-hover table-rooms']//child::tr[1]//child::td[7]")));
+            IWebElement clickOnEditIcon = driver.FindElementByXPath("//*[@class='table table-hover table-rooms']//child::tr[1]//child::td[7]");
+            clickOnEditIcon.Click();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[1]/div/div[1]/div/div/section/div[2]/div/div/div/div[2]/form/div[1]/div[1]/input")));
+            IWebElement updateTheRoomName = driver.FindElementByXPath("/html/body/div[1]/div/div[1]/div/div/section/div[2]/div/div/div/div[2]/form/div[1]/div[1]/input");
+            updateTheRoomName.Clear();
+            updateTheRoomName.SendKeys(updatedRoomName);
+            IWebElement clickOnSave = driver.FindElementByXPath("//*[text()='Save']");
+            clickOnSave.Click();
+            IWebElement element = driver.FindElementByXPath("//*[@class='table table-hover table-rooms']//child::tr[1]//child::td[1]//child::div");
+            wait.Until(ExpectedConditions.TextToBePresentInElement(element, "Updated Room Name"));
+
+            return new YourPokerRoomsPage_VotingProcess(driver);
+        }
+
+        public string TitleNameAfterUpdate()
+        {
+            string roomName = driver.FindElementByXPath("//*[@class='table table-hover table-rooms']//child::tr[1]//child::td[1]//child::div").Text.Substring(0);
+            return roomName;
         }
     }
 }

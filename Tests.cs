@@ -215,7 +215,44 @@ namespace PageObjectModelTry
             var changeTheImage = createNewRoom.ChangeTheProfileImage();
 
             driver.Quit();
+        }
 
+        [Fact]
+        public void SignInWithGoogleAccountFromMyProfile()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
+            var room = login.LoginProcessWithValidCredentials("aaa098873@gmail.com", "ababab.123");
+            var myProfile = room.EnterInMyProfile();
+            var signInWithGoogle = myProfile.SignInWithAgoogleAccount();
+
+            Assert.Equal("Conectați-vă – Conturi Google", signInWithGoogle.TitlePage());
+            driver.Quit();
+        }
+
+        [Fact]
+        public void DeleteFirstRoomFromYourPokerRoomsPage()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
+            var room = login.LoginProcessWithValidCredentials("aaa098873@gmail.com", "ababab.123");
+            var deleteFirstRoomFromPage = room.DeleteFirstRoom();
+            string assert = home.Title();
+
+            Assert.Equal("PlanITpoker: Your Poker Rooms", assert);
+            driver.Quit();
+        }
+
+        [Fact]
+        public void EditFirstRoomFromYourPokerRoomsPage()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
+            var room = login.LoginProcessWithValidCredentials("aaa098873@gmail.com", "ababab.123");
+            var editFirstRoom = room.EditFirstRoomFromPage("Updated Room Name");
+
+            Assert.Equal("Updated Room Name", editFirstRoom.TitleNameAfterUpdate());
+            driver.Quit();
         }
     }
 }

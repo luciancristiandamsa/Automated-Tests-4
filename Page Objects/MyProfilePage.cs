@@ -32,5 +32,21 @@ namespace PageObjectModelTry.Page_Objects
 
             return new MyProfilePage(driver);
         }
+
+        public string TitlePage()
+        {
+            string title = this.driver.Title;
+            return title;
+        }
+
+        public MyProfilePage SignInWithAgoogleAccount()
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//button[contains(@ng-submit-form-value, 'Google')]")));
+            IWebElement clickOnGoogleLink = driver.FindElementByXPath("//button[contains(@ng-submit-form-value, 'Google')]");
+            clickOnGoogleLink.Click();
+            wait.Until(ExpectedConditions.TitleIs("Conectați-vă – Conturi Google"));
+
+            return new MyProfilePage(driver);
+        }
     }
 }
