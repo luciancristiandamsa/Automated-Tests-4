@@ -199,6 +199,30 @@ namespace PageObjectModelTry.Page_Objects
             return new CreateStoriesAndVotingProcess(driver);
         }
 
+        public CreateStoriesAndVotingProcess VotingProcessAndRefreshingThePageWhenCardIsSelected(string storyName)
+        {
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Name("inputName")));
+            driver.FindElementByName("inputName").SendKeys(storyName);
+            IWebElement ClickSaveAndClose = driver.FindElementByXPath("//*[@ng-bs-click='createAndClose']");
+            ClickSaveAndClose.Click();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.Id("btn-start")));
+            IWebElement clickStart = driver.FindElementById("btn-start");
+            clickStart.Click();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//button[contains(@ng-bs-click, 'resetTimer')]")));
+            IWebElement clickOnTheCard = driver.FindElementByXPath("//*[text()='2']");
+            clickOnTheCard.Click();
+            driver.Navigate().Refresh();
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[@ng-bs-click='finish']")));
+            IWebElement clickOnSecondCard = driver.FindElementByXPath("//*[text()='3']");
+            clickOnSecondCard.Click();
+            SelectElement element = new SelectElement(driver.FindElementById("finalEstimate"));
+            element.SelectByValue("3");
+            IWebElement clickOnFinishVoting = driver.FindElementByXPath("//*[@ng-bs-click='finish']");
+            clickOnFinishVoting.Click();
+
+            return new CreateStoriesAndVotingProcess(driver);
+        }
+
         public bool ChangedOnObserverMode()
         {
             driver.FindElementByXPath("//*[@ng-bs-tooltip='Observer - Click to change']").Click();
@@ -240,7 +264,7 @@ namespace PageObjectModelTry.Page_Objects
             return new CreateStoriesAndVotingProcess(driver);
         }
 
-        public bool TitleRoom()
+        public bool ToastNotification()
         {
             bool title = this.driver.FindElementByXPath("//*[@class='toast-message']").Displayed;
             return title;

@@ -29,7 +29,7 @@ namespace PageObjectModelTry
             var createNewStory = createNewRoom.VotingProcess("First Story");
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='toast-message']")));
 
-            Assert.True(createNewStory.TitleRoom());
+            Assert.True(createNewStory.ToastNotification());
             driver.Quit();
         }
 
@@ -43,7 +43,7 @@ namespace PageObjectModelTry
             var createNewStory = createNewRoom.VotingProcessQuickPlay("First QuickPlay Story");
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='toast-message']")));
 
-            Assert.True(createNewStory.TitleRoom());
+            Assert.True(createNewStory.ToastNotification());
             driver.Quit();
         }
 
@@ -93,7 +93,7 @@ namespace PageObjectModelTry
             var createNewStory = createNewRoom.VotingProcess("First Story");
             wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='toast-message']")));
 
-            Assert.True(createNewStory.TitleRoom());
+            Assert.True(createNewStory.ToastNotification());
             driver.Quit();
         }
 
@@ -106,7 +106,7 @@ namespace PageObjectModelTry
             var createNewRoom = room.SetUpAndCreateNewRoomWithFourCards("First Room");
             var createNewStory = createNewRoom.VotingProcessQuickPlay("First Story");
 
-            Assert.True(createNewStory.TitleRoom());
+            Assert.True(createNewStory.ToastNotification());
             driver.Quit();
         }
 
@@ -119,7 +119,7 @@ namespace PageObjectModelTry
             var createNewRoom = room.SetUpAndCreateNewRoom("First Room QuickPlay");
             var createNewStory = createNewRoom.VotingProcessQuickPlayOnObserverMode("First QuickPlay Story");
 
-            Assert.True(createNewStory.TitleRoom());
+            Assert.True(createNewStory.ToastNotification());
             driver.Quit();
         }
         [Fact]
@@ -131,7 +131,7 @@ namespace PageObjectModelTry
             var createNewRoom = room.SetUpAndCreateNewRoom("First Room");
             var createNewStory = createNewRoom.VotingProcessWithTwoPlayers("First Story", "Player");
 
-            Assert.True(createNewStory.TitleRoom());
+            Assert.True(createNewStory.ToastNotification());
             driver.Quit();
         }
 
@@ -175,7 +175,7 @@ namespace PageObjectModelTry
             var createNewRoom = room.SetUpAndCreateNewRoomWithCountdown("First Room");
             var createNewStory = createNewRoom.VotingProcessQuickPlayWithAplayerAndAnObserver("First Story", "Second Player");
 
-            Assert.Equal(createNewStory.ChangedOnObserverMode(), createNewStory.TitleRoom());
+            Assert.Equal(createNewStory.ChangedOnObserverMode(), createNewStory.ToastNotification());
             driver.Quit();
         }
 
@@ -188,7 +188,7 @@ namespace PageObjectModelTry
             var createNewRoom = room.SetUpAndCreateNewRoom("First Room");
             var createNewStory = createNewRoom.VotingProcessQuickPlayWithAplayerAndAfeterRemoveHim("First Story", "Second Player");
 
-            Assert.True(createNewStory.TitleRoom());
+            Assert.True(createNewStory.ToastNotification());
             driver.Quit();
         }
 
@@ -201,7 +201,7 @@ namespace PageObjectModelTry
             var createNewRoom = room.SetUpAndCreateNewRoom("First Room");
             var createNewStory = createNewRoom.VotingProcessQuickPlayAndUploadCSVFile("First Story");
 
-            Assert.True(createNewRoom.TitleRoom());
+            Assert.True(createNewRoom.ToastNotification());
             driver.Quit();
         }
 
@@ -252,6 +252,19 @@ namespace PageObjectModelTry
             var editFirstRoom = room.EditFirstRoomFromPage("Updated Room Name");
 
             Assert.Equal("Updated Room Name", editFirstRoom.TitleNameAfterUpdate());
+            driver.Quit();
+        }
+
+        [Fact]
+        public void ChangeTheSelctedCardAfterRefreshingThePage()
+        {
+            var home = new HomePage(driver);
+            var login = home.ClickLogin();
+            var room = login.LoginProcessWithValidCredentials("aaa098873@gmail.com", "ababab.123");
+            var createNewRoom = room.SetUpAndCreateNewRoom("First Room");
+            var createNewStory = createNewRoom.VotingProcessAndRefreshingThePageWhenCardIsSelected("FirstStory");
+
+            Assert.True(createNewStory.ToastNotification());
             driver.Quit();
         }
     }
